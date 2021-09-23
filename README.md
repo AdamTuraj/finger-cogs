@@ -19,6 +19,7 @@ You can contact me in Red's 3rd party cog server at <a href="https://discord.com
 ## Installation
 
 `[p]repo add finger-cogs https://github.com/TheF1ng3r/finger-cogs`
+  
 `[p]cog install finger-cogs <cog_name>`
   
   
