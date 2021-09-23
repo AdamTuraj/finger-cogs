@@ -13,15 +13,17 @@ async def isenabled(ctx):
 
     if not channel:
         raise commands.UserFeedbackCheckFailure(
-            "Word counting is currently disabled. You must enable it to use this command."
+            "Word counting is currently disabled. ",
+            "You must enable it to use this command.",
         )
 
     if channel := ctx.guild.get_channel(channel):
         return True
-    else:
-        raise commands.UserFeedbackCheckFailure(
-            "The counting channel has been deleted. You must change it to a valid channel to use this command."
-        )
+
+    raise commands.UserFeedbackCheckFailure(
+        "The counting channel has been deleted. ",
+        "You must change it to a valid channel to use this command.",
+    )
 
 
 class WordCounting(commands.Cog):
@@ -39,7 +41,9 @@ class WordCounting(commands.Cog):
             "multi_count": False,
         }
 
-        # If you ever change these next 3 variables, make sure to add a space to the end or it will not work properly.
+        # If you ever change these next 3 variables,
+        # make sure to add a space to the end
+        # or it will not work properly.
 
         self.under20 = [
             "",
@@ -139,7 +143,11 @@ class WordCounting(commands.Cog):
 
         embed = discord.Embed(
             title="The count got ruined!",
-            description=f"{user.mention} messed up the counting streak at **{failed_number} ({await self.num2word(failed_number)}).**\nThe next number is now **1 (one).\n{fail_message}**",
+            description=(
+                f"{user.mention} messed up the counting streak at ",
+                f"**{failed_number} ({await self.num2word(failed_number)}).",
+                f"**\nThe next number is now **1 (one).\n{fail_message}**",
+            ),
             color=0xFF3C26,
         )
         embed.set_author(name=user.name, icon_url=user.avatar_url)
@@ -312,7 +320,8 @@ class WordCounting(commands.Cog):
 
         if channel != ctx.channel:
             await ctx.send(
-                f"The next number has been updated to {hn(count)}. I have notified everyone counting in {channel.mention}."
+                f"The next number has been updated to {hn(count)}. ",
+                f"I have notified everyone counting in {channel.mention}.",
             )
 
     @wordcountset.command(name="resetcount")
@@ -335,5 +344,6 @@ class WordCounting(commands.Cog):
 
         if channel != ctx.channel:
             await ctx.send(
-                f"Counting has been reset to 1. I have notified everyone counting in {channel.mention}."
+                "Counting has been reset to 1. ",
+                f"I have notified everyone counting in {channel.mention}.",
             )
