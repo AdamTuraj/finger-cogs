@@ -2,7 +2,7 @@ import re
 from typing import Union
 
 import discord
-from redbot.core import commands, Config
+from redbot.core import Config, commands
 from redbot.core.utils.chat_formatting import humanize_number as hn
 
 from .converters import NumberChecker
