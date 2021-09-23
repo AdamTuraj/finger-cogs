@@ -1,0 +1,14 @@
+{
+    "name": "WordCounting",
+    "author": [
+        "TheF1ng3r"
+    ],
+    "short": "Count using words.",
+    "description": "Create a word counting channel, with lots of other features to improve the experience.",
+    "tags": [
+        "counting",
+        "words"
+    ],
+    "install_msg": "Thanks for installing Word Counting! Use `[p]wordcount` for more info on how to get setup.",
+    "end_user_data_statement": "This cog stores your data only if you were the last to count. This data is to check if you double count."
+}
