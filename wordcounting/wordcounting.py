@@ -27,6 +27,10 @@ async def isenabled(ctx):
 
 
 class WordCounting(commands.Cog):
+    """Counting...but with words!"""
+
+    __version__ = "1.0.0"
+
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=387428934982398)

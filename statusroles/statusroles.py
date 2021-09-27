@@ -5,6 +5,10 @@ from .converters import WordConverter
 
 
 class StatusRoles(commands.Cog):
+    """Give roles depending on if someone has certain text in their new status."""
+
+    __version__ = "1.0.0"
+
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=183948923980)
