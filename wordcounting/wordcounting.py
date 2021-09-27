@@ -29,9 +29,7 @@ async def isenabled(ctx):
 class WordCounting(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(
-            self, identifier=387428934982398, force_registration=True
-        )
+        self.config = Config.get_conf(self, identifier=387428934982398)
 
         self.default_guild = {
             "channel": None,
