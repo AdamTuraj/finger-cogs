@@ -1,0 +1,15 @@
+{
+    "name": "StatusRoles",
+    "author": [
+        "TheF1ng3r"
+    ],
+    "short": "Gain roles based on text in members status.",
+    "description": "This cog allows you to gain roles based on certain text in members statuses.",
+    "tags": [
+        "status",
+        "roles",
+        "utility"
+    ],
+    "install_msg": "Thanks for installing StatusRoles! Use `[p]sr` for more info on how to get setup.",
+    "end_user_data_statement": "This cog does not store any End User Data."
+}

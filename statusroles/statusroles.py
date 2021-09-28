@@ -5,7 +5,7 @@ from .converters import WordConverter
 
 
 class StatusRoles(commands.Cog):
-    """Give roles depending on if someone has certain text in their new status."""
+    """Gain roles based on text in members status."""
 
     __version__ = "1.0.0"
 
