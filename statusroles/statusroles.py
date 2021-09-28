@@ -18,6 +18,9 @@ class StatusRoles(commands.Cog):
         self.default_guild = {"srs": {}}
         self.config.register_guild(**self.default_guild)
 
+    async def red_delete_data_for_user(self, **kwargs) -> None:
+        pass
+
     async def set_cache(self):
         self.srs_cache = await self.config.all_guilds()
 
