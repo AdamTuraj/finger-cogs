@@ -1,0 +1,14 @@
+{
+    "name": "ClashofClans",
+    "author": [
+        "TheF1ng3r"
+    ],
+    "short": "Get info about users and clans in Clash of Clans!",
+    "description": "Get info about users army, level, trophies and clans war, members and donations!",
+    "tags": [
+        "counting",
+        "words"
+    ],
+    "install_msg": "Thanks for installing the Clash of Clans cog! Use `[p]clash` to see the commands. Make sure to get a token from [The Clash of Clans developer page](http://developer.clashofclans.com) and set it using `[p]clash settoken <token>` to use the cog.",
+    "end_user_data_statement": "This cog stores data only if set by the user. Your clan and account tags are the only data saved."
+}
