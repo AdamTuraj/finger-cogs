@@ -210,7 +210,7 @@ class ClashOfClans(commands.Cog):
 
         if playerTag is None:
             if not tags:
-                raise commands.BadArgument(
+                return await ctx.send(
                     f"Please enter a valid player tag or link your account using `{ctx.prefix}account link`."
                 )
 
@@ -222,28 +222,31 @@ class ClashOfClans(commands.Cog):
             data = await self.request(f"players/%23{playerTags[0]}")
 
             if not data:
-                await ctx.send(self.issue_response)
-                return
+                return await ctx.send(self.issue_response)
 
-            await ctx.send(
+            elif data == 404:
+                return await ctx.send("Player was not found.")
+
+            return await ctx.send(
                 embed=await self.generate_user_embed(data, await ctx.embed_colour())
             )
-            return
 
         embeds = []
 
         for page_num, tag in enumerate(playerTags, start=1):
             data = await self.request(f"players/%23{tag}")
 
-            if not data:
-                await ctx.send(self.issue_response)
-                return
+            if not data or data == 404:
+                continue
 
             embed = await self.generate_user_embed(data, await ctx.embed_colour())
 
             embed.set_footer(text=f"User {page_num} of {len(tags)}")
 
             embeds.append(embed)
+
+        if not embeds:
+            return await ctx.send("Clan was not found.")
 
         await menu(ctx, embeds, self.default_controls)
 
@@ -258,7 +261,7 @@ class ClashOfClans(commands.Cog):
 
         if playerTag is None:
             if not tags:
-                raise commands.BadArgument(
+                return await ctx.send(
                     f"Please enter a valid clan tag or link your clan using `{ctx.prefix}clash linkclan`."
                 )
 
@@ -271,6 +274,9 @@ class ClashOfClans(commands.Cog):
 
         for tag in playerTags:
             data = await self.request(f"players/%23{tag}")
+
+            if not data or data == 404:
+                continue
 
             embed.set_author(
                 name=f"Troop levels for {data['name']}",
@@ -340,7 +346,7 @@ class ClashOfClans(commands.Cog):
 
         if clanTag is None:
             if not tag:
-                raise commands.BadArgument(
+                return await ctx.send(
                     f"Please enter a valid clan tag or link your clan using `{ctx.prefix}clash linkclan`."
                 )
 
@@ -349,8 +355,10 @@ class ClashOfClans(commands.Cog):
         data = await self.request(f"clans/%23{clanTag}")
 
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Clan was not found.")
 
         embed = discord.Embed(
             description=f"**Level {data['clanLevel']}, Members {data['members']}, {data['clanPoints']} Trophies, {data['clanVersusPoints']} versus trophies\n\n{data['description']}",
@@ -402,7 +410,7 @@ class ClashOfClans(commands.Cog):
 
         if clanTag is None:
             if not tag:
-                raise commands.BadArgument(
+                return await ctx.send(
                     f"Please enter a valid clan tag or link your clan using `{ctx.prefix}account linkclan`."
                 )
 
@@ -411,8 +419,10 @@ class ClashOfClans(commands.Cog):
         data = await self.request(f"clans/%23{clanTag}")
 
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Clan was not found.")
 
         members = "\n".join(
             f"`{member['tag']}` {member['name']}" for member in data["memberList"]
@@ -441,7 +451,7 @@ class ClashOfClans(commands.Cog):
 
         if clanTag is None:
             if not tag:
-                raise commands.BadArgument(
+                return await ctx.send(
                     f"Please enter a valid clan tag or link your clan using `{ctx.prefix}account linkclan`."
                 )
 
@@ -450,8 +460,10 @@ class ClashOfClans(commands.Cog):
         data = await self.request(f"clans/%23{clanTag}")
 
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Clan was not found.")
 
         donation_data = {
             member["donations"]: {
@@ -493,7 +505,7 @@ class ClashOfClans(commands.Cog):
 
         if clanTag is None:
             if not tag:
-                raise commands.BadArgument(
+                return await ctx.send(
                     f"Please enter a valid clan tag or link your clan using `{ctx.prefix}account linkclan`."
                 )
 
@@ -502,12 +514,13 @@ class ClashOfClans(commands.Cog):
         data = await self.request(f"clans/%23{clanTag}/currentwar")
 
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Clan was not found.")
 
         if data["state"] == "notInWar":
-            await ctx.send("This clan is not currently in a war.")
-            return
+            return await ctx.send("This clan is not currently in a war.")
 
         embed = discord.Embed(colour=await ctx.embed_colour())
         embed.set_author(
@@ -584,8 +597,7 @@ class ClashOfClans(commands.Cog):
         await msg.delete()
 
         if not pred.result:
-            await ctx.send("Reset cancelled, your token is still saved.")
-            return
+            return await ctx.send("Reset cancelled, your token is still saved.")
 
         await self.config.token.clear()
         await ctx.tick()
@@ -634,10 +646,14 @@ class ClashOfClans(commands.Cog):
         account_text = ""
         for tag in user_data["accounts"]:
             data = await self.request(f"players/%23{tag}")
+
+            if not data or data == 404:
+                continue
+
             account_text += f"[{data['name']} ({data['tag']})](https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=%23{tag})\n\n"
 
         if not account_text:
-            raise commands.BadArgument("This user has no accounts connected to them.")
+            return await ctx.send("This user has no accounts connected to them.")
 
         embed = discord.Embed(colour=await ctx.embed_colour())
         embed.set_author(
@@ -646,6 +662,12 @@ class ClashOfClans(commands.Cog):
 
         if user_data["clan"]:
             clan_data = await self.request(f"clans/%23{user_data['clan']}")
+
+            if not clan_data:
+                return await ctx.send(self.issue_response)
+
+            elif data == 404:
+                return await ctx.send("Clan was not found.")
 
             embed.add_field(
                 name="Clan",
@@ -663,8 +685,10 @@ class ClashOfClans(commands.Cog):
 
         data = await self.request(f"players/%23{tag}")
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Player was not found.")
 
         async with self.config.user(ctx.author).accounts() as tags:
             tags.append(tag)
@@ -677,8 +701,10 @@ class ClashOfClans(commands.Cog):
 
         data = await self.request(f"players/%23{tag}")
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Player was not found.")
 
         async with self.config.user(ctx.author).accounts() as tags:
             tags.remove(tag)
@@ -694,19 +720,21 @@ class ClashOfClans(commands.Cog):
         playerTag = await self.config.user(ctx.author).accounts()
 
         if not playerTag:
-            raise commands.BadArgument("You don't have an account linked.")
+            return await ctx.send("You don't have an account linked.")
 
         data = await self.request(f"players/%23{playerTag[0]}")
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Clan was not found.")
 
         clan = data.get("clan")
         if not clan:
-            raise commands.BadArgument("You are not in a clan.")
+            return await ctx.send("You are not in a clan.")
 
         if clan["tag"][1:] != tag:
-            raise commands.BadArgument("You are not in this clan.")
+            return await ctx.send("You are not in this clan.")
 
         await self.config.user(ctx.author).clan.set(tag)
 
@@ -718,8 +746,10 @@ class ClashOfClans(commands.Cog):
 
         data = await self.request(f"clans/%23{tag}")
         if not data:
-            await ctx.send(self.issue_response)
-            return
+            return await ctx.send(self.issue_response)
+
+        elif data == 404:
+            return await ctx.send("Clan was not found.")
 
         await self.config.user(ctx.author).clan.clear()
 
@@ -816,9 +846,7 @@ class ClashOfClans(commands.Cog):
     async def check_response_for_errors(self, response: aiohttp.ClientResponse):
 
         if response.status == 404:
-            raise commands.BadArgument(
-                f"{'Player' if 'players' in str(response.url) else 'Clan'} was not found."
-            )
+            return 404
         elif response.status == 200:
             return True
         else:
