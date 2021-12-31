@@ -3,9 +3,7 @@ from redbot.core import commands
 
 class TagConverter(commands.Converter):
     async def convert(self, ctx: commands.Context, arg: str):
-        arg = arg.replace("#", "")
-
-        return arg
+        return arg.replace("#", "")
 
 
 class UnlinkTagConverter(commands.Converter):
