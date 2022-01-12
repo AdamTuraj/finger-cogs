@@ -1,4 +1,4 @@
-# Finger-Cogs by TheF1ng3r#0002
+# Finger-Cogs by AdamT#0001
 
 <p align="center">
   <a href="https://github.com/Cog-Creators/Red-DiscordBot/tree/V3/develop">
@@ -26,5 +26,5 @@ You can contact me in Red's 3rd party cog server at <a href="https://discord.com
 | Name          | Status/Version   | Description (Click to see full status)                                                                                                                                                            | Authors                                  |
 |---------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
 | WordCounting      | 1.0.0           | <details><summary>Counting...but with words!</summary>Counting, but with words!</details>                                     | TheF1ng3r (TheF1ng3r#0002)                        |
-| StatusRoles      | 1.0.0           | <details><summary>Give roles depending on if someone has certain text in their new status.</summary>Give roles depending on if someone has certain text in their new status.</details>                                     | TheF1ng3r (TheF1ng3r#0002)                        |
-| ClashofClans      | 1.0.0           | <details><summary>Get info about users and clans in Clash of Clans!</summary>Get info about users and clans in Clash of Clans!</details>                                     | TheF1ng3r (TheF1ng3r#0002)                        |
+| StatusRoles      | 1.0.0           | <details><summary>Give roles depending on if someone has certain text in their new status.</summary>Give roles depending on if someone has certain text in their new status.</details>                                     | Adam (AdamT#0001)                        |
+| ClashofClans      | 1.0.0           | <details><summary>Get info about users and clans in Clash of Clans!</summary>Get info about users and clans in Clash of Clans!</details>                                     | Adam (AdamT#0001)                        |
