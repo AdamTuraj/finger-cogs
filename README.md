@@ -11,6 +11,8 @@
     <img src="https://img.shields.io/badge/code%20style-black-000000.svg">
     </a>
 <p>
+  
+## These cogs are no longer maintained and will most likely break over the next updates
 
 ## Contact
 
